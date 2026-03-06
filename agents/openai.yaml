@@ -1,0 +1,4 @@
+interface:
+  display_name: "Java Style"
+  short_description: "JDK 21 + Spring Boot 3.5.x backend engineering standards for code generation, review, refactoring, and internal component reuse"
+  default_prompt: "Handle this Java backend task using team standards: target JDK 21 and Spring Boot 3.5.x, prefer internal base components, and check naming, layering, logging, exceptions, validation, and maintainability."

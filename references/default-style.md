@@ -9,6 +9,7 @@ Use these rules for code generation and behavior-preserving refactoring in JDK 2
 - Prefer straightforward code over clever code.
 - Improve structure, not just formatting.
 - Reuse internal base components before introducing new models or wrappers.
+- For Maven execution in internal projects, prefer `~/.m2/settings.xml` before falling back to any other repository configuration.
 
 ## 2. Naming
 

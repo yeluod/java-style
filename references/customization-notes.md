@@ -11,6 +11,7 @@ Use this file when the user supplies project-specific engineering materials that
 - Slf4j logging required
 - Constructor injection only
 - Internal base component reuse is a high-priority rule
+- Maven commands should prefer `~/.m2/settings.xml` for private repository access
 
 ## What To Capture From User Materials
 
@@ -36,6 +37,7 @@ When the user provides shared code or documentation, extract and record:
 - If the project has an established internal abstraction, treat it as the default recommendation.
 - If a local module deviates intentionally, preserve that deviation only when it is documented or clearly required.
 - Record exceptions narrowly. Do not weaken the whole skill because one module has unusual legacy constraints.
+- If `~/.m2/settings.xml` is missing and Maven execution requires private repositories, ask the user for the correct settings file path.
 
 ## Typical Project-Specific Decisions To Add Here
 

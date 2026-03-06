@@ -26,6 +26,12 @@ Treat these constraints as the default unless the user explicitly says otherwise
 - Lombok is preferred when it improves readability and keeps object construction explicit
 - Slf4j logging with placeholder-based output
 
+For Maven-based projects with private internal dependencies:
+
+- prefer the user's Maven settings file at `~/.m2/settings.xml`
+- if Maven execution depends on private repositories and `~/.m2/settings.xml` is not available, ask the user for the correct settings file path before proceeding
+- do not assume public Maven Central access is sufficient for internal components
+
 Do not default to outdated Java 8 era boilerplate when a clearer JDK 21 or modern Spring Boot style is available.
 Do not force new syntax when it makes the code harder to read.
 
