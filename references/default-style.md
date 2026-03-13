@@ -8,7 +8,6 @@ Use these rules for code generation and behavior-preserving refactoring in JDK 2
 - Match local project conventions first when they are clear and healthy.
 - Prefer straightforward code over clever code.
 - Improve structure, not just formatting.
-- Reuse internal base components before introducing new models or wrappers.
 - For Maven execution in internal projects, prefer `~/.m2/settings.xml` before falling back to any other repository configuration.
 
 ## 2. Naming
@@ -36,7 +35,7 @@ Use these rules for code generation and behavior-preserving refactoring in JDK 2
 - Keep methods focused on one responsibility.
 - Prefer guard clauses to reduce nesting.
 - Split methods when they become long, branch-heavy, or mix validation, orchestration, persistence, and mapping concerns.
-- Keep parameter lists readable. If several parameters always travel together, prefer a dedicated request object or existing shared model.
+- Keep parameter lists readable. If several parameters always travel together, prefer a dedicated request object.
 - Make mutations and side effects obvious in method names.
 
 ## 5. Formatting
@@ -76,7 +75,6 @@ Use these rules for code generation and behavior-preserving refactoring in JDK 2
 - Prefer constructor injection. Do not use field injection.
 - Use Spring stereotypes intentionally and keep layering explicit.
 - Keep request validation at the application boundary.
-- Prefer shared web auto-configuration, shared Jackson binding, and shared validation handling over per-module reinvention.
 - Align exception translation, response wrapping, and configuration style with current project conventions.
 - Prefer modern Spring Boot configuration patterns over legacy verbose setup.
 
@@ -86,13 +84,10 @@ Use these rules for code generation and behavior-preserving refactoring in JDK 2
 - If an exception is caught, either recover intentionally or rethrow with added business context.
 - Avoid duplicate log-and-throw patterns unless the log adds context unavailable upstream.
 - Use specific exception types when the project defines them.
-- Prefer `BusinessException` for business failures and keep `ToolkitException` in the utility layer unless the failure is genuinely toolkit-related.
 - Keep null handling simple and explicit.
 - Do not return `null` collections; return empty collections instead.
 - Use `Optional` mainly for return values and boundary semantics, not as a default field or parameter type.
-- If the project already uses `Op`, prefer it over repetitive null, blank, empty-collection, and try-catch wrapper boilerplate when it improves readability.
 - Use streams when they improve clarity, but do not force `Stream` pipelines when a loop is easier to read.
-- If the project already uses `St`, prefer it for null-safe stream entry instead of local stream helper duplication.
 
 ## 10. Modern JDK 21 Style
 
@@ -101,25 +96,19 @@ Use these rules for code generation and behavior-preserving refactoring in JDK 2
 - Use switch expressions, pattern matching, `Stream#toList()`, text blocks, and other modern APIs when they simplify the code.
 - Do not use advanced language features as a display of cleverness.
 - If an older pattern is clearly more verbose and less expressive, prefer the modern replacement.
-- Reuse shared toolkit utilities such as `PageUtil`, `EnumUtil`, `TreeUtil`, `JacksonUtil`, and `ThrowableUtil` before writing local helper logic with the same responsibility.
+- Prefer standard library and well-established project utilities before adding local helper logic with the same responsibility.
 
-## 11. Internal Component Reuse
-
-- Before creating new base models, check whether the internal component library already provides them.
-- Prefer shared models such as `BaseDTO`, `PageReq`, `PageRes`, range models, `IdName`, `KeyValue`, shared enums, result wrappers, base exceptions, and SPI abstractions.
-- Prefer shared web and validation capabilities such as `Result`, global exception handlers, and validation annotations before adding controller-local equivalents.
-- Prefer shared framework components for async context propagation and request-body caching instead of local infrastructure helpers.
-- Business code should be built on top of the shared foundation, not parallel to it.
-- If a shared model is close but not exact, extend or adapt it instead of cloning its semantics.
-
-## 12. Comments And Documentation
+## 11. Comments And Documentation
 
 - Comment intent, invariants, and non-obvious tradeoffs.
 - Do not comment what the code already says plainly.
-- Add Javadoc to public APIs, extension points, and behavior with non-obvious contracts when it helps maintainers.
+- All code delivered by this skill must use Chinese comments.
+- Add complete Chinese Javadoc to public APIs, extension points, and behavior with non-obvious contracts.
+- Keep Javadoc tags fully aligned with the declaration signature, including `@param`, `@return`, `@throws`, and other necessary tags.
+- If a method or type is returned as part of the answer, do not omit Javadoc just because the snippet is short.
 - Keep documentation aligned with actual parameters, returns, and thrown exceptions.
 
-## 13. Refactoring Signals
+## 12. Refactoring Signals
 
 Treat these as prompts to refactor or at least call out:
 
@@ -131,15 +120,14 @@ Treat these as prompts to refactor or at least call out:
 - vague naming
 - business logic leaking into controllers or DTOs
 
-## 14. Testing Expectations
+## 13. Testing Expectations
 
 - Add or adjust tests when behavior, branch coverage, or edge handling changes materially.
 - Prefer test names that describe scenario and expected result.
 - Cover empty input, invalid input, boundary values, and failure paths when relevant.
 - If a refactor is behavior-preserving but structurally meaningful, keep or expand tests around the affected branch points.
 
-## 15. Override Order
+## 14. Override Order
 
 - User-provided project conventions override this file.
-- Internal component library constraints override generic public best practices.
 - Clear local project conventions override baseline defaults when they remain readable and correct.
